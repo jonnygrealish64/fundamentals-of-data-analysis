@@ -13,67 +13,72 @@ Include a Jupyter notebook called pyplot.ipynb that contains the following:
 25%: An in-depth explanation of three interesting plots from matplotlib.pyplot: streamplot, pie, table:
 
 #1: Streamplot:
-Streamplots are used to display 2D vector fields and the flow within. 
-Streamplots are coded as follows in matplotlib:
-ax.streamplot(x_grid, y_grid, x_vec, y_vec, density=spacing)
+Streamplots are used to display 2D vector fields and the flow within, they are coded in matplotlib as follows:
+ax.streamplot(X, Y, u, v, density=spacing)
 
-x_grid and y_grid are arrays of x, y points.
-x_vec and y_vec are arrays which denote the velocity of the stream at each point on the grid.
-density=spacing establishes how close the space in between streamlines are.
+X & Y are one-dimensional (1D) arrays of x & y axes' ranges, spread across an evenly spaced grid.
+x_vec and y_vec (u & v) are two-dimensional (2D) arrays of x & y, known as x & y-velocities, these denote the velocity of the stream at each point on the grid. The number of rows should match the length of y, and the number of columns should match x to ensure an evenly spaced grid.
+density=spacing dictates how close the space in between streamlines will be set to, this is established as a float number. When density is given a value of 1, the domain gets divided into a 30x30 grid, where the density scales the grid in a linear fashion.
+[density_x, density_y] could also be used for various levels of density that can be set in both directions of flow.
 
-Let's begin with a streamplot that contains stream lines on a 10x10 grid. All the stream lines on this plot are parallel and point horizontally to the right:
+We'll begin with creating a streamplot that contains stream lines on a 10x10 grid, where the stream lines are parallel and point horizontally to the right:
 
 import numpy as np
 import matplotlib.pyplot as plt
-# if using a Jupyter notebook, include:
 %matplotlib inline
 
-x = np.arange(0,10)
-y = np.arange(0,10)
+x = np.arange(0, 10) # setting range of x-axis
+y = np.arange(0, 10) # setting range of y-axis
 
-X, Y = np.meshgrid(x,y)
-u = np.ones((10,10)) # x-component to the right
-v = np.zeros((10,10)) # y-component zero
+X, Y = np.meshgrid(x, y) # grid will take in the ranges of x & y
+u = np.ones((10, 10)) # x-velocity flows horizontally to the right
+v = np.zeros((10, 10)) # y-velocity set to zero, no flow
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots() # define figure as variable ax with access to subplots
 
-ax.streamplot(X,Y,u,v, density = 0.5)
-ax.set_title('Stream Plot of Parallel Lines')
+ax.streamplot(X, Y, u, v, density = 0.5)
+ax.set_title('Streamplot of Parallel Horizontal Lines')
 plt.show()
 
-There are numerous aspects within a streamplot all outlined below:
+There are other aspects within a streamplot outlined below:
 
-x, y: these are one-dimensional (1D) arrays, across an evenly spaced grid.
+linewidth: float or 2D array:
+    The width of the stream lines. With a 2D array, the line width can be varied across the grid. The array must have the same shape as u & v.
 
-u, v: these are two-dimensional (2D) arrays, x & y-velocities, where the number of rows should match the length of y, the number of columns should match x.
+color: matplotlib color code, or 2D array:
+    The streamline's color. If given an array, its values are converted to colors via cmap and norm. The array must have the same shape as u & v.
 
-density: this is established as a float or 2-tuple that can control the space in between streamlines. When density = 1, the domain is divided into a 30x30 grid, where density linearly scales the grid. Each cell in the grid can have only one traversing streamline. [density_x, density_y] can be used for various levels of density in both directions.
+cmap: Colormap:
+    Colormap used to plot streamlines and arrows. This is only used if color is an array.
 
-linewidth: this is established as a numeric or 2D array, this value can vary when a 2D array has the same shape as velocities.
+norm: Normalize:
+    Normalize object used to scale luminance data to 0, 1. If None, stretch (min, max) to (0, 1). This is only used if color is an array.
 
-color: this is established as either a matplotlib color code, or a 2D array, to provide color to streamlines in the plot. With a 2D array in the same shape as velocities, the values of color are converted to specific colors via cmap (colormap).
+arrowsize: float:
+    Scaling factor for the arrow size.
 
-cmap: Colormap, this is used to plot the streamlines and arrows on the plot, which is only ever necessary to implement when using an array input for color.
+arrowstyle: str:
+    Arrow style specification. See FancyArrowPatch.
 
-norm: Normalize, this object is used to scale luminance data to 0, 1. If None, stretch (min, max) to (0, 1). Only necessary when color is an array.
+minlength: float:
+    Minimum length of streamline in axes coordinates.
 
-arrowsize: float has the factor in scaling the size of the arrows.
+start_points: Nx2 array:
+    Coordinates of starting points for the streamlines in data coordinates (the same coordinates as the x & y arrays).
 
-arrowstyle: string, which specifies the style of the arrow where FancyArrowPatch can facilitate.
-    
-minlength: float, to establish the minimum length of the streamlines in both axes coordinates.
+zorder: int:
+    The zorder of the stream lines and arrows. Artists with lower zorder values are drawn first.
 
-start_points: Nx2 array, the coordinates of starting points for the streamlines. In data coordinates, the same as the x and y arrays.
+maxlength: float:
+    Maximum length of streamline in axes coordinates.
 
-zorder: int, any number.
+integration_direction: {'forward', 'backward', 'both'}:
+    Integrate the streamline in forward, backward or both directions. The default is 'both'.
 
-Returns:
-stream_container: StreamplotSet
-    Container object with attributes
-        lines: matplotlib.collections.LineCollection of streamlines
-        arrows: collection of matplotlib.patches.FancyArrowPatch objects representing arrows half-way along stream lines.
-
-Additional kwargs: hold = [True|False] overrides default hold state.
+Returns: stream_container: StreamplotSet
+    Container object with attributes:
+        lines: LineCollection of streamlines
+        arrows: PatchCollection containing FancyArrowPatch objects, representing the arrows half-way along stream lines.
 
 CAO Points Notebook (40%):
 Include a Jupyter notebook called cao.ipynb that contains the following:
@@ -86,8 +91,8 @@ https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.html
 https://www.w3schools.com/python/matplotlib_pyplot.asp
 https://towardsdatascience.com/a-practical-summary-of-matplotlib-in-13-python-snippets-4d07f0011bdf
 https://matplotlib.org/3.1.1/gallery/images_contours_and_fields/plot_streamplot.html#sphx-glr-gallery-images-contours-and-fields-plot-streamplot-py
+https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.streamplot.html
 https://problemsolvingwithpython.com/06-Plotting-with-Matplotlib/06.15-Quiver-and-Stream-Plots/
-https://www.kite.com/python/docs/matplotlib.pyplot.streamplot
 https://www.tutorialspoint.com/matplotlib/matplotlib_pie_chart.htm
 https://www.w3schools.com/python/matplotlib_pie_charts.asp
 https://www.pythonpool.com/matplotlib-table/
