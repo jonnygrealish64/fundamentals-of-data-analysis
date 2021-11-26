@@ -83,7 +83,7 @@ Returns: stream_container: StreamplotSet
 Pie charts are used to display a single series of data points, where each value in the series is represented as a wedge (or slice of the pie) with each value shown as a percentage of the entire pie chart.
 Matplotlib offers a pie() function that generates a pie chart that represents the data given inside an array.
 Each value inside the array represents a slice in the pie chart, where the first slice begins from the x-axis and remaining data moves in an anti-clockwise direction.
-The size of each slice is calculated by comparing the slice with the total values, via foodies / sum(foodies).
+The size of each slice is calculated by comparing the slice with the total values, via foodies / sum(foodies)
 
 Each parameter used in constructing a pie chart are outlined below, and all aspects assembled together in the Jupyter notebook, pyplot.ipynb:
 
@@ -126,6 +126,85 @@ Legend:
 The legend parameter is used to display a list, in order to explain each slice and their respective titles and colors within the pie chart, along with adding a title to the legend:
 plt.legend(title = "Five Popular Fast Foods :P")
 
+#3: Table:
+The table() function is used in Python to create tables or add a table to axes.
+The important parameters within the table() function are outlined below:
+matplotlib.pyplot.table(
+    cellText = 2D list with string values: this is the text to be placed within the cells of the table,
+    cellColours = 2D list of matplotlib color specs: this sets the background colours of cells,
+    cellLoc = {'left', 'center', 'right'}: this aligns the values within cells, 'right' is set as the default,
+    colWidths = list of float: this sets the width of the columns,
+    rowLabels = list of strings: this contains the text of the cells of the rows,
+    rowColours = list of matplotlib color specs: this sets the row colours in the table,
+    rowLoc = {'left', 'center', 'right'}: this aligns the values within rows, 'left' is set as the default,
+    colLabels = list of strings: this contains the text of the cells of the columns,
+    colColours = list of matplotlib color specs: this sets the column colours in the table,
+    colLoc = {'left', 'center', 'right'}: this aligns the values within columns, 'center' is set as the default,
+    loc = string: this is the position of the cell with respect to the axes, 'bottom' is set as the default,
+    bbox = Bbox: this is a bounding box to insert the table into,
+    edges = {'open', 'closed', 'horizontal', 'vertical'}: the cell edges to be drawn with a line, 'closed' is set as the default,
+    **kwargs
+                       )
+
+One method of creating a table is via the use of custom values entered by the user:
+    the table_data array is passed into the cellText parameter as follows: (cellText = table_data),
+    the column names can be specified with the colLabels parameter: (colLabels = column_labels)
+    the table is placed at the center of the respective axes via: (loc = "center")
+
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(1, 1)
+table_data = [
+              [10, 24, 37],
+              [55, 69, 76],
+              [84, 96, 108]
+             ]
+column_labels = ["Column 1", "Column 2", "Column 3"]
+ax.axis('tight')
+ax.axis('off')
+ax.table(
+         cellText = table_data,
+         colLabels = column_labels,
+         loc = "center"
+        )
+
+A second method we can use to generate a table is passing a Pandas DataFrame and a NumPy array as a cellText parameter.
+This generates the table via the Pandas DataFrame, df.
+The values of df are passed into the cellText parameter, and the column names of df are passed into the colLabels parameter, and the rowLabels parameter acts as a label for the rows in the table:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(1, 1)
+table_data = [
+              [10, 24, 37],
+              [55, 69, 76],
+              [84, 96, 108]
+             ]
+column_labels = ["Column 1", "Column 2", "Column 3"]
+df = pd.DataFrame(data, columns = column_labels)
+ax.axis('tight')
+ax.axis('off')
+ax.table(
+         cellText = df.values,
+         colLabels = df.columns,
+         rowLabels = ["A", "B", "C"],
+         loc = "center"
+        )
+plt.show()
+
+We can also add colours to particular fields in order to distinguish the row and column labels, using the rowColours and colColours parameters:
+ax.table(
+         cellText = df.values,
+         colLabels = df.columns,
+         rowLabels = ["Row A", "Row B", "Row C"],
+         rowColours = ["orange"] * 3,
+         colColours = ["green"] * 3,
+         cellLoc = "center",
+         loc = "center"
+        )
+We can also modify the created table by passing in parameters (**kwargs) to modify font size of data points, or scaling the entire table to a specified size, etc:
+table.set_fontsize(15)
+table.scale(1, 3)
+
 CAO Points Notebook (40%):
 Include a Jupyter notebook called cao.ipynb that contains the following:
 10%: An overview of how to load CAO points info from the CAO website into a pandas data frame.
@@ -142,4 +221,6 @@ https://problemsolvingwithpython.com/06-Plotting-with-Matplotlib/06.15-Quiver-an
 https://www.tutorialspoint.com/matplotlib/matplotlib_pie_chart.htm
 https://www.w3schools.com/python/matplotlib_pie_charts.asp
 https://www.pythonpool.com/matplotlib-table/
-https://towardsdatascience.com/simple-little-tables-with-matplotlib-9780ef5d0bc4
+https://www.delftstack.com/howto/matplotlib/plot-table-using-matplotlib/
+https://docs.w3cub.com/matplotlib~3.1/_as_gen/matplotlib.pyplot.table
+https://www.statology.org/matplotlib-table/
