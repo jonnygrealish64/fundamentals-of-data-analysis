@@ -1,0 +1,156 @@
+# 1: Streamplot
+x & y: these variables set the ranges of the axes.
+    x = np.arange(0, 10)
+    y = np.arange(0, 10)
+X & Y: these are one-dimensional (1D) arrays of x & y axes, spread across an evenly spaced grid.
+    X, Y = np.meshgrid(x, y)
+x_vec & y_vec (u & v): these are two-dimensional (2D) arrays of x & y axes, known as x & y-velocities, these denote the velocity of the stream at each point on the grid. The number of rows should match the length of y, and the number of columns should match x to ensure an evenly spaced grid.
+    u = np.ones((10, 10))
+    v = np.zeros((10, 10))
+density=spacing: this dictates how close the space in between streamlines will be set to, this is established as a float number. When density is given a value of 1, the domain gets divided into a 30x30 grid, where the density scales the grid in a linear fashion:
+[density_x, density_y] could also be used for various levels of density that can be set in both directions of flow:
+    ax.streamplot(X, Y, u, v, density = 0.5)
+color: this sets a colour to the streamlines:
+    ax.streamplot(X, Y, u, v, density = 0.5, color = "green")
+
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+x = np.arange(0, 10) # setting range of x-axis
+y = np.arange(0, 10) # setting range of y-axis
+
+X, Y = np.meshgrid(x, y) # grid will take in the ranges of x & y
+u = np.ones((10, 10)) # x-velocity flows horizontally to the right
+v = np.zeros((10, 10)) # y-velocity set to zero, no flow
+
+fig, ax = plt.subplots() # defining figure & axes
+
+ax.streamplot(X, Y, u, v, density = 0.5, color = "green")
+ax.set_title('Streamplot of Parallel Horizontal Lines')
+plt.show()
+
+#2: Pie:
+foodies:
+The foodies array contains numeric values to represent percentages (slices) within the pie chart:
+    foodies = [12, 10, 45, 8, 25]
+    ax.pie(foodies, ...)
+
+labels:
+The label parameter is used to add string values into another array, to display alongside the numerical values in the pie chart:
+    foodlabels = ['Curry', 'Burger', 'Pizza', 'Sushi', 'Burrito']
+    ax.pie(..., labels = foodlabels)
+
+colors:
+The color parameter allows the user to specify a color (via hexadecimal values or supported color names) for each slice in the pie chart into an array:
+    foodcolors = ["Orange", "Yellow", "Red", "Pink", "Brown"]
+    ax.pie(..., colors = foodcolors)
+
+explode:
+The explode parameter is useful for when you want one slice of the pie to stand out from the rest.
+The slice in question will extend out from the centre of the pie, via values entered into a separate array:
+    boom = [0, 0, 0.2, 0, 0]
+    ax.pie(..., explode = boom)
+
+Starting Point Angle:
+The startangle parameter is useful in setting the starting point for data within a pie chart.
+The default startangle is set to 0 degrees (3 o'clock), 90 (12 o'clock), 180 (9 o'clock) & 270 (6 o'clock), all values moving in an anti-clockwise direction:
+    ax.pie(..., startangle = 90)
+
+Auto Percentages:
+The auto percentage parameter (autopct) is used to display the numerical values of an array inside their respective wedges as percentage labels inside a pie chart.
+The percentages are formatted to each contain one decimal place, 25.0%:
+    ax.pie(..., autopct = '%1.1f%%')
+
+Shadow:
+The shadow parameter adds a shadow effect to the pie chart:
+    ax.pie(..., shadow = True)
+
+Legend:
+The legend parameter is used to display a list, in order to explain each slice and their respective titles and colors within the pie chart, along with adding a title to the legend:
+    plt.legend(title = "Five Popular Fast Foods :P")
+
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+fig = plt.figure()
+ax = fig.add_axes([0, 0, 1, 2])
+ax.axis('equal')
+
+foodies = [12, 10, 45, 8, 25]
+foodlabels = ['Curry', 'Burger', 'Pizza', 'Sushi', 'Burrito']
+foodcolors = ["Orange", "Yellow", "Red", "Pink", "Brown"]
+boom = [0, 0, 0.2, 0, 0]
+ax.pie(foodies, labels = foodlabels, colors = foodcolors, explode = boom, startangle = 90, autopct = '%1.1f%%', shadow = True)
+plt.legend(title = "Five Popular Fast Foods :P")
+plt.show()
+
+#3: Table:
+table_data: this consists of multiple arrays of custom values, which will be implemented into the cellText parameter within the table() function:
+    table_data = [
+                  [10, 24, 37],
+                  [55, 69, 76],
+                  [84, 96, 108]
+                 ]
+    table = ax.table(
+                     cellText = table_data
+                    )
+column_labels: this consists of the titles of the columns which will be implemented into the colLabels parameter within the table() function:
+    column_labels = ["Column 1", "Column 2", "Column 3"]
+    table = ax.table(
+                     colLabels = column_labels
+                    )
+cellLoc: this string is the position of the contents of all cells:
+    table = ax.table(
+                     cellLoc = "center"
+                    )
+loc: this string is the position of the cell with respect to the axes, 'bottom' is set as the default:
+    table = ax.table(
+                     loc = "center"
+                    )
+df: Alternatively, a pandas DataFrame(df) can be used to house the values and column titles:
+    import pandas as pd
+    df = pd.DataFrame(table_data, columns = column_labels)
+    table = ax.table(
+                     cellText = df.values,
+                     colLabels = df.columns
+                    )
+colour: Rows and columns can be coloured as follows:
+    table = ax.table(
+                     rowColours = ["orange"] * 3,
+                     colColours = ["green"] * 3
+                    )
+kwargs: These are parameters that can modify the completed table:
+    Setting Font Size of Values: table.set_fontsize(15)
+    Setting Scale of Table (width, length): table.scale(1, 3)
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+fig, ax = plt.subplots(1, 1)
+table_data = [
+              [10, 24, 37],
+              [55, 69, 76],
+              [84, 96, 108]
+             ]
+column_labels = ["Column 1", "Column 2", "Column 3"]
+
+df = pd.DataFrame(table_data, columns = column_labels)
+ax.axis('tight')
+ax.axis('off')
+
+table = ax.table(
+                cellText = df.values,
+                colLabels = df.columns,
+                rowLabels = ["Row A", "Row B", "Row C"],
+                rowColours = ["Orange"] * 3,
+                colColours = ["Green"] * 3,
+                cellLoc = "center",
+                loc = "center"
+                )
+table.set_fontsize(15)
+table.scale(1, 3)
+plt.show()
