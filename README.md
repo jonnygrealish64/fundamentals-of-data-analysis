@@ -10,12 +10,20 @@ The repository should contain the following:
 Pyplot Notebook (40%):
 Include a Jupyter notebook called pyplot.ipynb that contains the following:
 15%: An overview of the matplotlib.pyplot Python package.
-25%: An in-depth explanation of three interesting plots from matplotlib.pyplot: streamplot, pie, table:
+25%: An in-depth explanation of three interesting plots from matplotlib.pyplot.
+
+Overview of matplotlib.pyplot:
+The matplotlib.pyplot package is a Python module which allows the user to create and visualise figures and plots.
+Pyplot uses functions within matplotlib to interact with figures or plots to enhance them, such as decorating them with axes labels, colours and shapes of plot points, etc.
+Examples of plots that can be built include line graphs, bar charts, histograms, scatter plots, pie charts and also 3D plots.
+In this project, I have chosen the following three plots to discuss in further detail:
+    #1: Streamplot
+    #2: Pie
+    #3: Table
 
 #1: Streamplot:
 Streamplots are used to display 2D vector fields and the flow within, they are coded in matplotlib as follows:
     ax.streamplot(X, Y, u, v, density=spacing)
-
 X & Y are one-dimensional (1D) arrays of x & y axes' ranges, spread across an evenly spaced grid.
 x_vec and y_vec (u & v) are two-dimensional (2D) arrays of x & y, known as x & y-velocities, these denote the velocity of the stream at each point on the grid. The number of rows should match the length of y, and the number of columns should match x to ensure an evenly spaced grid.
 density=spacing dictates how close the space in between streamlines will be set to, this is established as a float number. When density is given a value of 1, the domain gets divided into a 30x30 grid, where the density scales the grid in a linear fashion.
@@ -97,8 +105,15 @@ We can also modify the created table by passing in parameters (**kwargs) to modi
 table.set_fontsize(15)
 table.scale(1, 3)
 
+CAO Points Notebook (40%):
+Include a Jupyter notebook called cao.ipynb that contains the following:
+10%: An overview of how to load CAO points info from the CAO website into a pandas data frame.
+20%: A detailed comparison of CAO points in 2019, 2020, and 2021 using pandas functionality.
+10%: Appropriate plots and other visualisations to enhance your notebook for viewers.
+
 References:
 https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.html
+https://www.geeksforgeeks.org/matplotlib-tutorial/
 https://www.w3schools.com/python/matplotlib_pyplot.asp
 https://towardsdatascience.com/a-practical-summary-of-matplotlib-in-13-python-snippets-4d07f0011bdf
 https://matplotlib.org/3.1.1/gallery/images_contours_and_fields/plot_streamplot.html#sphx-glr-gallery-images-contours-and-fields-plot-streamplot-py
@@ -110,11 +125,3 @@ https://www.pythonpool.com/matplotlib-table/
 https://www.delftstack.com/howto/matplotlib/plot-table-using-matplotlib/
 https://docs.w3cub.com/matplotlib~3.1/_as_gen/matplotlib.pyplot.table
 https://www.statology.org/matplotlib-table/
-
-CAO Points Notebook (40%):
-Include a Jupyter notebook called cao.ipynb that contains the following:
-10%: An overview of how to load CAO points info from the CAO website into a pandas data frame.
-20%: A detailed comparison of CAO points in 2019, 2020, and 2021 using pandas functionality.
-10%: Appropriate plots and other visualisations to enhance your notebook for viewers.
-
-References:
