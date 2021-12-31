@@ -125,3 +125,4 @@ https://www.pythonpool.com/matplotlib-table/
 https://www.delftstack.com/howto/matplotlib/plot-table-using-matplotlib/
 https://docs.w3cub.com/matplotlib~3.1/_as_gen/matplotlib.pyplot.table
 https://www.statology.org/matplotlib-table/
+https://www.geeksforgeeks.org/python-pandas-dataframe/
